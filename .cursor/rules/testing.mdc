@@ -1,0 +1,35 @@
+---
+description: Regras de testes (unitários e integração) para o projeto DataFeed.
+globs: **/*Tests.cs
+alwaysApply: false
+---
+
+# Regras de Testes
+
+Objetivo: testes **rápidos**, **determinísticos**, fáceis de manter e que realmente protejam o sistema.
+
+## Estrutura e nomenclatura
+
+- Padrão **Arrange / Act / Assert** em todos os testes.
+- Um cenário por teste.
+- Nome do teste descrevendo claramente o comportamento:
+  - `Metodo_Condicao_ResultadoEsperado`
+  - Exemplos:
+    - `ExecuteAsync_Should_ReturnPagedResult_When_DataExists`
+    - `ExecuteAsync_Should_ThrowValidationException_When_StartDateAfterEndDate`
+
+## Mocks e isolamento
+
+- Em testes unitários, sempre mockar:
+  - Persistência (repositórios, Mongo, etc.).
+  - HTTP/APIs externas.
+  - Filas e I/O.
+- Dados simulados só em testes; **nunca** em dev ou prod.
+- Testes de integração podem usar banco/HTTP reais quando justificado, isolando ambiente e dados.
+
+## Boas práticas
+
+- Testar comportamento observável, não detalhes de implementação.
+- Manter testes independentes entre si (sem ordem de execução).
+- Utilizar FluentAssertions para assertions expressivas.
+

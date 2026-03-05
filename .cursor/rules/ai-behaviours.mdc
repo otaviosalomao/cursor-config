@@ -1,0 +1,99 @@
+---
+description: Comportamento global da IA para o projeto DataFeed (constituição, contexto, segurança de mudanças e protocolo de revisão).
+alwaysApply: true
+---
+
+# AI Behaviour — DataFeed
+
+## AI Constitution
+
+**Princípios:**  
+(1) Preservar arquitetura  
+(2) Simplicidade > complexidade  
+(3) Legibilidade > cleverness  
+(4) Consistência > inovação  
+(5) Sem padrões paralelos  
+(6) Sem abstração prematura  
+(7) Nunca violar camadas  
+(8) Build ok após alteração  
+(9) Reutilizar, não duplicar  
+(10) Analisar código existente antes de gerar.
+
+**Regra suprema:** Em conflito entre boas práticas genéricas, exemplos externos e código do repositório → **o repositório tem prioridade.**
+
+## AI Operating Model
+
+**Hierarquia:**  
+(1) Código existente  
+(2) Skills  
+(3) Rules  
+(4) Constitution  
+(5) Boas práticas.
+
+**Antes de implementar:**
+
+- Ler pelo menos dois arquivos similares.
+- Identificar padrão e confirmar camada (Clean Architecture).
+- Mapear dependências.
+- Checar se já existe equivalente.
+
+**Depois de implementar:**
+
+- Build ok.
+- DI correto.
+- Sem violação de camadas.
+- Sem duplicação estrutural.
+- Contratos públicos validados.
+
+**Proibido:**
+
+- Novo padrão arquitetural/UseCase/Controller sem instrução explícita.
+- Nova lib sem justificativa.
+- Reformatar arquivo inteiro sem necessidade.
+
+## Change Safety Protocol
+
+**Proibido sem instrução explícita:**
+
+- Alterar contratos públicos.
+- Modificar assinaturas de interfaces consumidas.
+- Mover código entre camadas.
+- Adicionar nova lib externa.
+- Alterar estratégia de persistência.
+
+**Mudança estrutural:** antes de aplicar, a IA deve:
+
+1. Explicar impacto e riscos.
+2. Listar dependências afetadas.
+3. Propor alternativa menos invasiva se existir.
+
+## AI Context — DataFeed
+
+- **Stack:** .NET 10, ASP.NET Core 10, MongoDB, AWS (SQS, Secrets Manager), FluentValidation, JWT, OpenAPI.
+- **Arquitetura:** Clean Architecture por módulos. Camadas: Domain, Application, Infrastructure, Presentation, Shared. Dependências apontam sempre para dentro.
+- **Organização:** módulos funcionais; cada módulo distribuído nas camadas.
+- **Persistência:** MongoDB.
+- **Mensageria:** AWS SQS.
+- **Auth:** JWT.
+- **Ambientes:** dev, uat, prod.
+- **Logging:** Solutions.Analytics.Tools.Logging (logs estruturados + ExecutionTimeMetric para I/O). Em código novo com I/O ou ponto de entrada: aplicar logs/métricas conforme a skill `logging-metrics`.
+
+## AI Review Protocol
+
+**Checklist de revisão:**
+
+- SOLID.
+- Responsabilidades misturadas.
+- Dependência entre camadas.
+- Duplicação estrutural.
+- Nomeação.
+- Complexidade desnecessária.
+- Validação obrigatória ausente.
+
+**Formato de resposta de review:**
+
+- `### Problemas` — 1. ... 2. ...
+- `### Impacto` — ...
+- `### Sugestão` — ...
+- `### Refatoração (opcional)` — bloco de código com proposta.
+

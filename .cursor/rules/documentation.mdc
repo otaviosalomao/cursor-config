@@ -1,0 +1,28 @@
+---
+description: Regras de documentação e comentários para o projeto DataFeed.
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Regras de Documentação
+
+Objetivo: documentar **somente quando necessário**, mantendo o **código como fonte de verdade**.
+
+## Quando documentar
+
+- Apenas sob pedido explícito do usuário ou quando for essencial para:
+  - Contratos públicos (APIs, DTOs expostos, integração externa).
+  - Comportamentos não óbvios ou restrições de negócio difíceis de inferir pelo código.
+- Comentários para explicar **intenção, decisão ou restrição**, nunca o óbvio.
+
+## Comentários
+
+- Preferir nomes de classes, métodos e variáveis que se expliquem sozinhos.
+- Comentar **por que** algo é feito de determinada forma, e não **o que** o código já deixa claro.
+- Remover código obsoleto em vez de comentá-lo.
+
+## Repositório de documentação
+
+- Não criar ou atualizar README ou documentação externa sem solicitação explícita.
+- Quando for solicitado, manter a documentação enxuta, objetiva e próxima do código que descreve.
+

@@ -1,0 +1,44 @@
+---
+description: Regras de design de código para manter simplicidade, robustez e fácil manutenção no DataFeed.
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Regras de Design de Código
+
+Objetivo: **manutenção e expansão fáceis**, com **simplicidade** e **robustez**.
+
+## Nomenclatura e estilo
+
+- Nomes claros; métodos com verbo + intenção.
+- Funções pequenas, com uma responsabilidade bem definida.
+- **Uso obrigatório de `this.` para campos, propriedades e métodos da instância** sempre que fizer sentido (por exemplo, `this._service`, `this.PropertyName`, `this.ExecuteAsync(...)`), para deixar explícito o acesso ao estado e ao comportamento da própria classe.
+- Injeção de dependência sempre por construtor, **sempre atribuindo campos/propriedades com `this.NomePropriedade` no construtor** (por exemplo, `this._service = service;`).
+- Um conceito predominante por arquivo; evitar arquivos gigantes com responsabilidades misturadas.
+
+## Erros e validação
+
+- Não engolir exceções; usar tipos específicos.
+- Logs estruturados com Solutions.Analytics.Tools.Logging (ver skill `logging-metrics`).
+- Validar toda entrada externa (tipo, formato, obrigatoriedade) na borda do sistema.
+
+## Clean Code e SOLID
+
+- DRY — evitar duplicação; extrair funções/helper quando fizer sentido.
+- Uma responsabilidade por método/classe.
+- Poucos parâmetros por método; agrupar em objetos quando necessário.
+- Comentários apenas quando o código não for autoexplicativo; **documentar o porquê**, não o óbvio.
+- Seguir SOLID: uma razão para mudar, estender por novas implementações, interfaces pequenas, dependência de abstrações.
+
+## Simplicidade
+
+- YAGNI e KISS — não antecipar necessidades futuras; evitar over-engineering.
+- Refatorar quando métodos ou arquivos crescerem demais, sem mudar comportamento observável.
+
+## Checklist pós-implementação
+
+- [ ] Build ok.
+- [ ] SOLID e arquitetura respeitados.
+- [ ] Sem código morto ou não utilizado.
+- [ ] Sem duplicação clara de lógica.
+

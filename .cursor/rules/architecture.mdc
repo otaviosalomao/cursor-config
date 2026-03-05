@@ -1,0 +1,42 @@
+---
+description: Regras de arquitetura e camadas (Clean Architecture por módulos) para o DataFeed.
+globs: **/*.cs
+alwaysApply: true
+---
+
+# Regras de Arquitetura
+
+Objetivo: código **fácil de manter e expandir**, com camadas bem definidas e dependências controladas.
+
+## Dependências e camadas
+
+- **Domain**: apenas regras de negócio, entidades, value objects e **interfaces** (repositórios, serviços de domínio). Sem ORM, drivers ou serialização.
+- **Application**: casos de uso, DTOs, validação. Depende só de Domain (e Shared).
+- **Infrastructure**: implementa interfaces de Domain/Application (repositórios, clientes HTTP, filas, bancos, AWS).
+- **Presentation**: controllers/API, middlewares, endpoints; orquestram use cases.
+
+Sentido de dependência permitido:
+
+- Entrada → Application → Domain  
+- Infrastructure → Domain/Application  
+- Nunca o inverso.
+
+## Responsabilidade por camada
+
+- **Domain** — entidades e regras de negócio; sem detalhes de persistência.
+- **Application** — um caso de uso por operação; coordena repositórios e entidades.
+- **Infrastructure** — persistência, HTTP, filas, configuração de bancos, AWS.
+- **Presentation** — mapeia HTTP → use case → HTTP; sem regra de negócio.
+
+## Proibido
+
+- Lógica de negócio em Presentation ou Infrastructure.
+- Entrada (API) depender diretamente de repositório/banco.
+- Domain depender de Application, Infrastructure ou Presentation.
+- Infrastructure depender de Presentation.
+
+## Expansão
+
+- Novos comportamentos: novas implementações ou novos casos de uso, sem quebrar contratos existentes.
+- Novas integrações: nova implementação em Infrastructure, sem alterar Domain/Application.
+
